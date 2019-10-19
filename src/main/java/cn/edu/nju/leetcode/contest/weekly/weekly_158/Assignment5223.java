@@ -1,4 +1,4 @@
-package cn.edu.nju.leetcode.contest.contest_158;
+package cn.edu.nju.leetcode.contest.weekly.weekly_158;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package cn.edu.nju.leetcode.contest.contest_157;
+package cn.edu.nju.leetcode.contest.weekly.weekly_156;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

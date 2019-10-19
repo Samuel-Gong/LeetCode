@@ -1,4 +1,4 @@
-package cn.edu.nju.leetcode.contest.contest_10;
+package cn.edu.nju.leetcode.contest.biweekly.biweekly_10;
 
 /**
  * <p>
