@@ -23,7 +23,7 @@ package cn.edu.nju.leetcode.problems;
  * @author Shenmiu
  * @date 2019-07-23
  */
-public class Assignment4 {
+public class LeetCode4 {
 
     /**
      * 因为是找两个有序数组的中位数，第一思路就是运用归并排序中的 merge
@@ -167,21 +167,25 @@ public class Assignment4 {
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
             int n = nums1.length;
             int m = nums2.length;
+            // 对于奇数、偶数，都要找到最中间的两个数
+            // 不能使用 (len1 + len2) / 2，因为对于奇数来说，这个数不是中间的数
             int left = (n + m + 1) / 2;
             int right = (n + m + 2) / 2;
-            //将偶数和奇数的情况合并，如果是奇数，会求两次同样的 k 。
+            // 将偶数和奇数的情况合并，如果是奇数，会求两次同样的 k
             return (getKth(nums1, 0, nums2, 0, left) + getKth(nums1, 0, nums2, 0, right)) * 0.5;
         }
 
         private int getKth(int[] nums1, int p1, int[] nums2, int p2, int k) {
+            // 根据数组剩余长度进行判断
             int len1 = nums1.length - p1;
             int len2 = nums2.length - p2;
-            //让 len1 的长度小于 len2，这样就能保证如果有数组空了，一定是 len1
-            if (len1 > len2) {
-                return getKth(nums2, p2, nums1, p1, k);
-            }
+
             if (len1 == 0) {
                 return nums2[p2 + k - 1];
+            }
+
+            if (len2 == 0) {
+                return nums1[p1 + k - 1];
             }
 
             if (k == 1) {
@@ -192,9 +196,9 @@ public class Assignment4 {
             int j = p2 + Math.min(len2, k / 2) - 1;
 
             if (nums1[i] > nums2[j]) {
-                return getKth(nums1, p1, nums2, j + 1, k - (j - p2 + 1));
+                return getKth(nums1, p1, nums2, j + 1, k - Math.min(len2, k / 2));
             } else {
-                return getKth(nums1, i + 1, nums2, p2, k - (i - p1 + 1));
+                return getKth(nums1, i + 1, nums2, p2, k - Math.min(len1, k / 2));
             }
         }
 
