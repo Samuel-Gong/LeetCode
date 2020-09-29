@@ -10,13 +10,17 @@ import java.util.Deque;
  * @author Shenmiu
  * @date 2019-07-13
  */
-public class Assignment20 {
+public class LeetCode20 {
 
-    class Solution {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        solution.isValid("()[]{}");
+    }
 
-        private Deque<Character> stack = new ArrayDeque<>();
+    static class Solution {
 
         public boolean isValid(String s) {
+            Deque<Character> stack = new ArrayDeque<>();
 
             boolean match = true;
             int index = 0;
@@ -38,6 +42,8 @@ public class Assignment20 {
                     case ']':
                         match = !stack.isEmpty() && stack.pop() == '[';
                         break;
+                    default:
+                        return false;
                 }
                 index++;
             }
@@ -45,5 +51,4 @@ public class Assignment20 {
             return match && stack.isEmpty();
         }
     }
-
 }
