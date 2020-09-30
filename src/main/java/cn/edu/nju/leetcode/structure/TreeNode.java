@@ -1,8 +1,5 @@
 package cn.edu.nju.leetcode.structure;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <p>
  * <p>
@@ -25,22 +22,29 @@ public class TreeNode {
         this.right = right;
     }
 
+    /**
+     * @param arr 形似完全二叉树的值的数组，中间为空的节点用 null 表示
+     * @return 构造的树的根节点
+     */
     public static TreeNode ofArray(Integer[] arr) {
-        List<TreeNode> nodes = new ArrayList<>(arr.length + 1);
-        nodes.add(new TreeNode(0, null, null));
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == null) {
+        // 按照完全二叉树去构造一棵树
+        TreeNode[] nodes = new TreeNode[arr.length + 1];
+        // 生成一个假的父节点，循环内可以对所有节点进行一致处理
+        nodes[0] = new TreeNode(0);
+        for (int i = 1; i < nodes.length; i++) {
+            if (arr[i - 1] == null) {
                 continue;
             }
-            TreeNode n = new TreeNode(arr[i]);
-            nodes.add(n);
-            TreeNode parent = nodes.get((i + 1) / 2);
-            if ((i + 1) % 2 == 0) {
-                parent.left = n;
+            nodes[i] = new TreeNode(arr[i - 1]);
+            // 找到父节点
+            TreeNode parent = nodes[i / 2];
+            // 判断是左子节点还是右子节点
+            if (i % 2 == 0) {
+                parent.left = nodes[i];
             } else {
-                parent.right = n;
+                parent.right = nodes[i];
             }
         }
-        return nodes.get(1);
+        return nodes[1];
     }
 }
