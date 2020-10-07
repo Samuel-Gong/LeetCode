@@ -15,7 +15,7 @@ public class ListNode {
         val = x;
     }
 
-    public static ListNode constructLinkedList(int[] arr) {
+    public static ListNode fromArray(int[] arr) {
         if (arr.length == 0) {
             return null;
         }
