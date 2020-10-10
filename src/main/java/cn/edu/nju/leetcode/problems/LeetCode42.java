@@ -23,7 +23,12 @@ import java.util.Deque;
  * @author Shenmiu
  * @date 2019-08-01
  */
-public class Assignment42 {
+public class LeetCode42 {
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.trap(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
+    }
 
     static class Solution {
         public int trap(int[] height) {
@@ -49,9 +54,33 @@ public class Assignment42 {
         }
     }
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println(solution.trap(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
+    /**
+     * 单增栈
+     */
+    static class Solution1 {
+        public int trap(int[] height) {
+            if (height == null || height.length == 0) return 0;
+            Deque<Integer> stack = new ArrayDeque<>();
+            int sum = 0;
+            for (int i = 0; i < height.length; i++) {
+                while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+                    // height[i] 是在 height[stack.pop()] 右边第一个比 height[stack.pop()] 高的墙
+                    int h = height[stack.pop()];
+                    // 栈空表示 height[stack.pop()] 左边没有墙，不能计算距离
+                    if (stack.isEmpty()) {
+                        break;
+                    }
+                    // 计算 height[stack.pop()] 的左右两堵墙之间的距离
+                    int distance = i - stack.peek() - 1;
+                    // 找左右两堵墙中较矮的一堵
+                    int min = Math.min(height[stack.peek()], height[i]);
+                    // distance * (min-h) 表示两堵墙之间，h 之上的平面的雨水
+                    sum = sum + distance * (min - h);
+                }
+                stack.push(i);
+            }
+            return sum;
+        }
     }
 
 }
