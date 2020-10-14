@@ -10,7 +10,12 @@ import java.util.Deque;
  * @author Shenmiu
  * @date 2019/9/29
  */
-public class Assignment150 {
+public class LeetCode150 {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
+    }
+
     static class Solution {
         public int evalRPN(String[] tokens) {
             Deque<Integer> token = new ArrayDeque<>();
@@ -49,10 +54,5 @@ public class Assignment150 {
             }
             return token.pop();
         }
-    }
-
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println(solution.evalRPN(new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}));
     }
 }
