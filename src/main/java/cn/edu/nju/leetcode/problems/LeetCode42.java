@@ -26,31 +26,40 @@ import java.util.Deque;
 public class LeetCode42 {
 
     public static void main(String[] args) {
+        Solution1 solution1 = new Solution1();
+        System.out.println(solution1.trap(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
+
         Solution solution = new Solution();
         System.out.println(solution.trap(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
     }
 
+    /**
+     * 双指针法
+     */
     static class Solution {
         public int trap(int[] height) {
-            Deque<Integer> deque = new ArrayDeque<>();
-            deque.push(0);
-            int max = 0;
-            int res = 0;
-            for (int i = 0; i < height.length; i++) {
-                int cur = height[i];
-                if (cur <= deque.peek()) {
-                    deque.push(cur);
+            if (height == null || height.length == 0) return 0;
+            int sum = 0;
+            // 表示 [0, left) 的最大值，不包括 left 指针指向的位置
+            int leftMax = 0;
+            // 表示 (right, len-1] 的最大值，不包括 right 指针指向的位置
+            int rightMax = 0;
+            int left = 0;
+            int right = height.length - 1;
+            while (left <= right) {
+                // leftMax < rightMax 时，表示此时 left 指针所指位置能接的雨水将由 leftMax 决定
+                if (leftMax < rightMax) {
+                    // leftMax 可能比 left 小，则 left 处不能接雨水
+                    sum += Math.max(0, leftMax - height[left]);
+                    leftMax = Math.max(height[left], leftMax);
+                    left++;
                 } else {
-                    int base = max > cur ? cur : max;
-                    while (!deque.isEmpty()) {
-                        int mid = deque.pop();
-                        res += cur - mid;
-                    }
-                    max = cur;
+                    sum += Math.max(0, rightMax - height[right]);
+                    rightMax = Math.max(height[right], rightMax);
+                    right--;
                 }
             }
-
-            return res;
+            return sum;
         }
     }
 
